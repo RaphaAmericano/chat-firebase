@@ -2,11 +2,11 @@ import React from 'react';
 import ReactDOM from 'react-dom';
 import './index.css';
 import App from './App';
-import store from './app/store';
+import store, { rrfProps } from './app/store';
 import { Provider } from 'react-redux';
 import * as serviceWorker from './serviceWorker';
 import { ReactReduxFirebaseProvider } from 'react-redux-firebase';
-import { rrfProps } from './features/firebase/firebaseSlice';
+
 
 ReactDOM.render(
   <React.StrictMode>
