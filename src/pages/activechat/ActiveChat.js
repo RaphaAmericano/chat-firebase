@@ -1,7 +1,10 @@
 import React from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { useFirebase, useFirestore, useFirestoreConnect } from "react-redux-firebase";
-import { setContactChat, setContactUID } from "../../features/selectedContact/selectedContactActions";
+import { setContactChat } from "../../features/selectedContact/selectedContactActions";
+import ChatCompose from "./ChatCompose";
+import ChatForm from "./ChatForm";
+import ChatMessages from "./ChatMessages";
 
 function ActiveChat(props){
     const dispatch = useDispatch();
@@ -13,9 +16,10 @@ function ActiveChat(props){
 
     useFirestoreConnect([ { collection: 'chats'}]);
     const chats = useSelector( state => state.firestore.data.chats);
-    const chat = useSelector( state => state.firestore.data.chats[uidChat]);
+
     const uid = useSelector(state => state.firebase.auth.uid);
     const user = useSelector(state => state.firebase.data.users[uidContact]);
+
     React.useEffect(() => {
         findActiveChat()
     },[uidContact, chats])
@@ -33,11 +37,13 @@ function ActiveChat(props){
     }
 
     const findActiveChat = () => {
-        const result = Object.keys(chats).find( key => chats[key].users.find( userUID => userUID === uid));
-        if(result !== undefined ){
-            dispatch(setContactChat(result))
-        } else {
-            createNewChat();
+        if(chats !== undefined || chats !== undefined ) {
+            const result = Object.keys(chats).find( key => chats[key].users.find( userUID => userUID === uid));
+            if(result !== undefined || result !== null){
+                dispatch(setContactChat(result))
+            } else {
+                createNewChat();
+            }
         }
     }
 
@@ -45,7 +51,8 @@ function ActiveChat(props){
 
     return  <div>
                 <h2>Chat Ativo: {uidChat}</h2>
-
+                <ChatCompose activechat={uidChat}/>
+                <ChatForm />
             </div>
 }
 
