@@ -3,18 +3,16 @@ import { useSelector } from "react-redux";
 import { firestoreConnect, useFirebase, useFirebaseConnect, useFirestore, useFirestoreConnect } from "react-redux-firebase";
 
 
-function Users(pros){
+function Users({ users, contacts }){
+    
     const firebase = useFirebase();
-    useFirebaseConnect([{ path: 'users' }]);
-    const users = useSelector(state => state.firebase.data.users);
-    const contacts = useSelector(state => state.firebase.profile.contacts);
     const uid = useSelector(state => state.firebase.auth.uid);
 
     const addToContacts = (key) => {
         if(contacts === undefined){
             return firebase.push(`users/${uid}/contacts`, key)
         } else {
-            const exists = Object.keys(contacts).find( contact => contacts[contact] === key)
+            const exists = contacts.find( contact => contact === key)
             console.log(exists);
             if(exists === undefined || exists === null ) {
                 return firebase.push(`users/${uid}/contacts`, key)
@@ -25,7 +23,7 @@ function Users(pros){
     return  <div>
                 <h2>Usuarios</h2>
                 <ul>
-                    {users !== undefined ? Object.keys(users).filter(key => key !== uid).map(key => <li key={key} ><button type="button" onClick={() => addToContacts(key)}>{users[key].username}</button></li>) : null }
+                    {users !== undefined ? users.filter(user => user.uid !== uid).map(user => <li key={user.uid} ><button type="button" onClick={() => addToContacts(user.uid)}>{user.username}</button></li>) : null }
                 </ul>
             </div>
 }

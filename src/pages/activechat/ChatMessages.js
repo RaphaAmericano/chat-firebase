@@ -3,7 +3,6 @@ import { useSelector } from "react-redux";
 import { useFirestoreConnect } from "react-redux-firebase";
 
 function ChatMessages(props){
-
     return <div>
         <h2>Mensagens</h2>
         <ul>

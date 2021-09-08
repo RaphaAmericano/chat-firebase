@@ -2,7 +2,8 @@ import { useSelector } from "react-redux";
 import { useFirebase } from "react-redux-firebase"
 import ActiveChat from "./activechat/ActiveChat";
 import Contacts from "./contacts/Contacts";
-import Users from "./users/Users";
+
+import UsersCompose from "./users/UsersCompose";
 export default function Chat(props){
     const firebase = useFirebase();
     const username = useSelector(state => state.firebase.profile.username)
@@ -13,7 +14,7 @@ export default function Chat(props){
 
     return  <section>
                 <div>Chat {username}<button onClick={logout}>deslogar</button></div>
-                <Users />
+                <UsersCompose />
                 <Contacts />
                 <ActiveChat />
             </section>
