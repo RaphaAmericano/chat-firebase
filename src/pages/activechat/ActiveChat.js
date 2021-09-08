@@ -7,6 +7,9 @@ import ChatForm from "./ChatForm";
 import ChatMessages from "./ChatMessages";
 
 function ActiveChat(props){
+    React.useEffect(() => {
+        console.log(props)
+    },[])
     const dispatch = useDispatch();
     const uidContact = useSelector( state => state.selectedcontact.contactuid);
     const uidChat = useSelector( state => state.selectedcontact.activechatuid);

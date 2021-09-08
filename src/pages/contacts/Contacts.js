@@ -1,14 +1,12 @@
-import { useSelector } from "react-redux";
+import React from "react";
 import ContactItem from "./ContactItem";
 
-function Contacts(props){
-
-    const contacts = useSelector(state => state.firebase.profile.contacts);
+function Contacts({ contacts }){
 
     return <div>
             <h2>Contatos</h2>
             <ul>
-                {contacts !== undefined ? Object.keys(contacts).map( key => <ContactItem key={key} keyHash={contacts[key]}/>) : null }
+                {contacts ? contacts.map( (contact, i) => <ContactItem key={i} keyHash={contact}/>) : null }
             </ul>
         </div>
 }

@@ -1,7 +1,9 @@
 import { useSelector } from "react-redux";
 import { useFirebase } from "react-redux-firebase"
 import ActiveChat from "./activechat/ActiveChat";
+import ActiveChatCompose from "./activechat/ActiveChatCompose";
 import Contacts from "./contacts/Contacts";
+import ContactsCompose from "./contacts/ContactsCompose";
 
 import UsersCompose from "./users/UsersCompose";
 export default function Chat(props){
@@ -15,7 +17,8 @@ export default function Chat(props){
     return  <section>
                 <div>Chat {username}<button onClick={logout}>deslogar</button></div>
                 <UsersCompose />
-                <Contacts />
-                <ActiveChat />
+                {/* <Contacts /> */}
+                <ContactsCompose />
+                <ActiveChatCompose />
             </section>
 }

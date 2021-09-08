@@ -19,12 +19,18 @@ function ChatForm(props){
         console.log(data);
         const newMessage = { chat: activeChatUid, text: data.text, owner: uid, time: new Date().getTime()}
         console.log(newMessage);
-        firestore.collection('messages').add(newMessage)
+        firestore.collection('chats').doc(activeChatUid).collection('messages').add(newMessage)
             .then(res => {
                 console.log(res)
                 reset(initialValues)
             })
             .catch(error => console.warm(error))
+        // firestore.collection('messages').add(newMessage)
+        //     .then(res => {
+        //         console.log(res)
+        //         reset(initialValues)
+        //     })
+        //     .catch(error => console.warm(error))
     }
     
     return <form onClick={handleSubmit(onSubmit)}>

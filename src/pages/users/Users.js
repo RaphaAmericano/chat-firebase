@@ -1,6 +1,6 @@
 import React from "react";
 import { useSelector } from "react-redux";
-import { firestoreConnect, useFirebase, useFirebaseConnect, useFirestore, useFirestoreConnect } from "react-redux-firebase";
+import {  useFirebase } from "react-redux-firebase";
 
 
 function Users({ users, contacts }){
@@ -13,7 +13,6 @@ function Users({ users, contacts }){
             return firebase.push(`users/${uid}/contacts`, key)
         } else {
             const exists = contacts.find( contact => contact === key)
-            console.log(exists);
             if(exists === undefined || exists === null ) {
                 return firebase.push(`users/${uid}/contacts`, key)
             }
