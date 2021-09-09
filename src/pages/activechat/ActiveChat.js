@@ -7,9 +7,7 @@ import ChatForm from "./ChatForm";
 import ChatMessages from "./ChatMessages";
 
 function ActiveChat(props){
-    // React.useEffect(() => {
-    //     console.log(props)
-    // },[])
+
     const dispatch = useDispatch();
     const uidContact = useSelector( state => state.selectedcontact.contactuid);
     const uidChat = useSelector( state => state.selectedcontact.activechatuid);
@@ -22,6 +20,10 @@ function ActiveChat(props){
 
     const uid = useSelector(state => state.firebase.auth.uid);
     const user = useSelector(state => state.firebase.data.users[uidContact]);
+
+    React.useEffect(() => {
+        console.log(user)
+    },[user])
 
     React.useEffect(() => {
         findActiveChat()
@@ -54,6 +56,7 @@ function ActiveChat(props){
 
     return  <div>
                 <h2>Chat Ativo: {uidChat}</h2>
+                <h3>{ user.username }</h3>
                 <ChatCompose activechat={uidChat}/>
                 <ChatForm />
             </div>
