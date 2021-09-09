@@ -3,7 +3,9 @@ import { useSelector } from "react-redux";
 import { useFirestoreConnect } from "react-redux-firebase";
 
 function ChatMessages({ messages }){
-
+    React.useEffect(() => {
+        console.log(messages)
+    })
     return <div>
         <h2>Mensagens</h2>
         <ul>

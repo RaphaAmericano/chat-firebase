@@ -12,17 +12,20 @@ function ContactItem({ keyHash }){
     const chats = useSelector(state => state.firestore.data.chats);
 
     const genrateNewChat = () => {
-        const isChat = Object.keys(chats).find(id => {
-            const user1 = chats[id].users.find(elem => elem === uid);
-            const user2 = chats[id].users.find(elem => elem === keyHash);
-            if(user1 !== undefined && user2 !== undefined){
-                return id
+        let isChat;
+        Object.keys(chats).forEach( key => {
+            const activeTarget = chats[key].users.find(user => user === keyHash)
+            const activeUser = chats[key].users.find(user => user === uid)
+            if(activeTarget !== undefined && activeUser !== undefined){
+                isChat = key;
             }
-        });
-        if(isChat !== false || isChat !== undefined ){
+        })
+        console.log(isChat)
+        if(isChat === undefined){
             firestore.collection('chats').add({ users: [uid, keyHash] })
                 .then(res =>  dispatch(setContactChat(res.id)))
                 .catch(error => console.log(error))
+
         } else {
             dispatch(setContactChat(isChat))
         }
