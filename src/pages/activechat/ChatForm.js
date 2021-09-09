@@ -1,5 +1,5 @@
 import { useForm } from "react-hook-form";
-import { useSelector } from "react-redux";
+import { useSelector, useDispatch } from "react-redux";
 import { useFirestore } from "react-redux-firebase";
 
 const initialValues = {
@@ -7,7 +7,7 @@ const initialValues = {
 }
 
 function ChatForm(props){
-
+    const dispatch = useDispatch();
     const firestore = useFirestore();
     const uid = useSelector( state => state.firebase.auth.uid);
     const activeChatUid = useSelector( state => state.selectedcontact.activechatuid);
@@ -16,14 +16,11 @@ function ChatForm(props){
     });
 
     const onSubmit = (data) => {
-        console.log(data);
+        // console.log(data);
         const newMessage = { chat: activeChatUid, text: data.text, owner: uid, time: new Date().getTime()}
-        console.log(newMessage);
+        // console.log(newMessage);
         firestore.collection('chats').doc(activeChatUid).collection('messages').add(newMessage)
-            .then(res => {
-                console.log(res)
-                reset(initialValues)
-            })
+            .then(res => reset(initialValues))
             .catch(error => console.warm(error))
         // firestore.collection('messages').add(newMessage)
         //     .then(res => {

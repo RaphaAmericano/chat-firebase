@@ -10,3 +10,8 @@ export function setContactUID(uid){
         payload: uid
     }
 }
+export function getContactUID(){
+    return {
+        type: 'GET_CONTACT_UID',
+    }
+}

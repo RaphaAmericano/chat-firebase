@@ -1,5 +1,5 @@
-import { configureStore } from '@reduxjs/toolkit';
-import { combineReducers, createStore } from 'redux';
+import { configureStore, getDefaultMiddleware } from '@reduxjs/toolkit';
+import { combineReducers } from 'redux';
 import firebase from 'firebase/app';
 import 'firebase/auth';
 import 'firebase/firestore';
@@ -9,7 +9,8 @@ import { firebaseReducer } from "react-redux-firebase";
 import { createFirestoreInstance, firestoreReducer } from 'redux-firestore';
 
 import selectedContactReducer from '../features/selectedContact/selectedContactReducer';
-
+import createSagaMiddleware from 'redux-saga';
+import rootSaga from './sagas';
 
 
 const firebaseConfig = {
@@ -54,14 +55,21 @@ const initialState = {}
 const isDev = process.env.REACT_APP_ENV !== 'production';
 
 // const store = createStore(rootReducer, initialState, isDev)
+
+const sagaMiddleware = createSagaMiddleware();
+const middleware = [...getDefaultMiddleware({ thunk: false}), sagaMiddleware]
 const store = configureStore({
   reducer: {
     firebase: firebaseReducer,
     firestore: firestoreReducer,
     selectedcontact: selectedContactReducer
   },
+  middleware,
+  // middleware: (getDefaultMiddleware) => getDefaultMiddleware().concat(sagaMiddleware),
   devTools: isDev
 })
+
+sagaMiddleware.run(rootSaga);
 
 export const rrfProps = {
   firebase, 

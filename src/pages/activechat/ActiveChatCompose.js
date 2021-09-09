@@ -15,9 +15,8 @@ export default compose(
                     storeAs: 'messages' } ]
     }),
     connect((state) => {
-        return state;
-        // return {
-
-        // };
+        return {
+            messages: state.firestore.ordered.messages
+        };
     })
     )(ActiveChat)
