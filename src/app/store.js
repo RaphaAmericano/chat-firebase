@@ -4,6 +4,7 @@ import firebase from 'firebase/app';
 import 'firebase/auth';
 import 'firebase/firestore';
 import 'firebase/database';
+import 'firebase/analytics';
 import { firebaseReducer } from "react-redux-firebase";
 
 import { createFirestoreInstance, firestoreReducer } from 'redux-firestore';
@@ -44,6 +45,7 @@ const rrfConfig = {
 
 firebase.initializeApp(firebaseConfig);
 firebase.firestore();
+firebase.analytics();
 
 const rootReducer = combineReducers({
   firebase: firebaseReducer,

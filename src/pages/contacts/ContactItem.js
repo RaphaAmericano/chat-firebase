@@ -1,10 +1,11 @@
 import React from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { useFirestore } from 'react-redux-firebase';
+import { useFirebase, useFirestore } from 'react-redux-firebase';
 import { setContactChat, setContactUID } from '../../features/selectedContact/selectedContactActions';
 
 function ContactItem({ keyHash }){
     const firestore = useFirestore();
+    const firebase = useFirebase();
     const dispatch = useDispatch();
 
     const uid = useSelector(state => state.firebase.auth.uid);
@@ -19,16 +20,16 @@ function ContactItem({ keyHash }){
             if(activeTarget !== undefined && activeUser !== undefined){
                 isChat = key;
             }
-        })
-        console.log(isChat)
-        if(isChat === undefined){
-            firestore.collection('chats').add({ users: [uid, keyHash] })
-                .then(res =>  dispatch(setContactChat(res.id)))
-                .catch(error => console.log(error))
-
-        } else {
-            dispatch(setContactChat(isChat))
-        }
+        });
+        // if(isChat === undefined){
+        //     firestore.collection('chats')
+        //         .add({ users: [uid, keyHash] })
+        //         .then( res => dispatch(setContactChat(res.id))
+        //         .then( res => console.log(res))
+        //         .catch(error => console.log(error))
+        // } else {
+        //     dispatch(setContactChat(isChat))
+        // }
     }
 
     const selectContact = () => {

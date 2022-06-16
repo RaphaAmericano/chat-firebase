@@ -1,6 +1,7 @@
 import React from "react";
 import { useForm } from "react-hook-form";
 import { useFirebase } from "react-redux-firebase"
+import { registerLogin } from "../services/analytics";
 
 const initialValues = {
     email:'',
@@ -16,7 +17,10 @@ function Login(props){
 
     const onSubmit = (data) => {
         firebase.login({ email: data.email, password: data.password})
-            .then( res => console.log(res))
+            .then( res => {
+                console.log(res);
+                registerLogin(data.email);
+            })
             .catch( error => console.log(error))
     }
 
